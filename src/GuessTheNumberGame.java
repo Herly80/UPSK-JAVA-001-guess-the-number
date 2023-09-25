@@ -1,31 +1,57 @@
+import javax.swing.*;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GuessTheNumberGame {
+
+    private static Random random = new Random();
+    static int targetNumber = random.nextInt(100) + 1;
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-        int randomNumber = random.nextInt(100) + 1;
-        int intentos = 0;
+        int Attempts = 0;
         int guess;
-        System.out.println("Bienvenido a Guess The Number!!");
-        System.out.println("Adivina un numero entre 1 y 100");
+
+        Scanner addName = new Scanner(System.in);
+        System.out.println("¡Bienvenido al divertido juego de adivina tu número!!");
+        System.out.println("Ingresa tu nombre: ");
+        String namePlayer = addName.nextLine();
+        Player humanPlayer = new HumanPlayer(namePlayer);
+        System.out.println("Hola " + humanPlayer.getName() + " Introduce un número entre 1 y 100.");
 
         do {
             System.out.println("Escribe tu numero: ");
             guess = scanner.nextInt();
-            intentos++;
+            Attempts++;
 
-            if (guess > randomNumber) {
-                System.out.println("Intenta un numero mas bajo");
-            } else if (guess < randomNumber) {
-                System.out.println("Intenta un numero mas alto");
+            if (guess > targetNumber) {
+                System.out.println(humanPlayer.getName() + " Intenta un numero mas bajo");
+            } else if (guess < targetNumber) {
+                System.out.println(humanPlayer.getName() + " Intenta un numero mas alto");
             } else {
-                System.out.println("Felicitaciones!! Adivinaste!!");
-                System.out.println("Numeros de intentos: " + intentos);
+                System.out.println(humanPlayer.getName() + " Felicitaciones!! Adivinaste!!");
+                System.out.println("El número era: " + targetNumber);
+                System.out.println("Numeros de intentos: " + Attempts);
             }
-        } while (guess != randomNumber);
-        scanner.close();
-    }
 
+        } while (guess != targetNumber);
+        scanner.close();
+
+
+    }
 }
+
+
+
+
+
+   /*try {
+           guess = scanner.nextInt();
+           } catch (NumberFormatException e) {
+           JOptionPane.showMessageDialog(null, "Error:  debes ingresar un número");
+           main(args);
+           System.exit(0);
+           }
+
+    */
