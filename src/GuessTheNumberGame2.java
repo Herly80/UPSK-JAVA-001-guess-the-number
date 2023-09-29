@@ -5,7 +5,7 @@ public class GuessTheNumberGame2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-        int randomNumber = 1 + random.nextInt(100-1) + 1;
+        int randomNumber = random.nextInt(100) + 1;
         int Attempts = 0;
         int guess;
         System.out.println("Bienvenidos al divertido juego de Adivina el número!!");

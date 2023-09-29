@@ -1,42 +1,78 @@
-import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
-
 public class GuessTheNumberGame {
-
-    private static Random random = new Random();
-    static int targetNumber = random.nextInt(100) + 1;
-
+    public static int randomNumber() {
+        Random random = new Random();
+        return random.nextInt(100) +1;
+    }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int Attempts = 0;
-        int guess;
+        System.out.println("¡¡Bienvenido al divertido juego de adivina tu número!!");
+        int targetNumber = randomNumber();
+        System.out.println(targetNumber);
+        checkGuess(targetNumber);
+    }
+    public static void checkGuess(int args){
+        int guess = 0;
+        HumanPlayer humanPlayer = new HumanPlayer();
+        ComputerPlayer computerPlayer = new ComputerPlayer();
 
-        Scanner addName = new Scanner(System.in);
-        System.out.println("¡Bienvenido al divertido juego de adivina tu número!!");
-        System.out.println("Ingresa tu nombre: ");
-        String namePlayer = addName.nextLine();
-        Player humanPlayer = new HumanPlayer(namePlayer);
-        System.out.println("Hola " + humanPlayer.getName() + " Introduce un número entre 1 y 100.");
 
-        do {
-            System.out.println("Escribe tu numero: ");
-            guess = scanner.nextInt();
-            Attempts++;
+        String humanName = humanPlayer.getName();
+        int humanNumber = humanPlayer.makeGuess();
 
-            if (guess > targetNumber) {
-                System.out.println(humanPlayer.getName() + " Intenta un numero mas bajo");
-            } else if (guess < targetNumber) {
-                System.out.println(humanPlayer.getName() + " Intenta un numero mas alto");
-            } else {
-                System.out.println(humanPlayer.getName() + " Felicitaciones!! Adivinaste!!");
-                System.out.println("El número era: " + targetNumber);
-                System.out.println("Numeros de intentos: " + Attempts);
+
+
+        int computerNumber = computerPlayer.makeGuess();
+        ArrayList<Integer> attemptsHuman;
+        ArrayList<Integer> attemptsComputer = new ArrayList<>();
+
+
+        while(guess >= 0){
+            if(guess % 2 ==0){
+
+                if(args > humanNumber){
+                    System.out.println(humanName + " " +  humanNumber + " Introduce un número más alto . ");
+                    guess ++;
+                    computerNumber = computerPlayer.makeGuess();
+
+
+                }else if(args < humanNumber){
+                    System.out.println(humanName + " " + humanNumber + " Introduce un número más bajo. ");
+                    humanPlayer.getGuesses(humanNumber);
+                    guess++;
+                    computerNumber = computerPlayer.makeGuess();
+
+                }else{
+                    attemptsHuman = humanPlayer.getGuesses(humanNumber);
+                    System.out.println("¡¡Felicitaciones!! " + humanName +" Acertaste ");
+                    System.out.println("Tus números fueron: " + attemptsHuman);
+                    break;
+                }
+            }else{
+                if(args > computerNumber){
+                    System.out.println("Computadora: " + computerNumber + " Introduce un número más alto  " );
+                    System.out.println(" Es tu turno: "+ humanName);
+                    attemptsComputer = computerPlayer.getGuesses(computerNumber);
+                    guess ++;
+                    humanNumber = humanPlayer.makeGuess();
+
+                }else if(args < computerNumber) {
+                    System.out.println("Computadora: " + computerNumber + " Introduce un número más bajo");
+                    System.out.println(" Es tu turno: " + humanName);
+                    attemptsComputer = computerPlayer.getGuesses(computerNumber);
+                    guess++;
+                    humanNumber = humanPlayer.makeGuess();
+
+                }else{
+                    System.out.println("La computadora ganó!!");
+                    System.out.println("Sus números fueron: " + attemptsComputer);
+                    break;
+                }
+
             }
 
-        } while (guess != targetNumber);
-        scanner.close();
+        }
 
 
     }
@@ -46,12 +82,3 @@ public class GuessTheNumberGame {
 
 
 
-   /*try {
-           guess = scanner.nextInt();
-           } catch (NumberFormatException e) {
-           JOptionPane.showMessageDialog(null, "Error:  debes ingresar un número");
-           main(args);
-           System.exit(0);
-           }
-
-    */

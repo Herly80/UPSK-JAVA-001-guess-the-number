@@ -1,24 +1,21 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
-abstract public class  Player extends GuessTheNumberGame {
+abstract class Player {
+    String name;
 
-    protected String name;
+    ArrayList<Integer> guesses = new ArrayList<>();
 
-    protected List<Integer> guesses = new ArrayList<>();
-
-    public Player(String name) {
-        this.name = name;
-    }
-
-    public abstract int makeGuess();
-
-    public String getName() {
+    abstract int makeGuess();
+    public String getName(){
+        System.out.println("Por favor introduce tu nombre: ");
+        Scanner scanner = new Scanner(System.in);
+        name = scanner.nextLine();
         return name;
     }
-
-    public List<Integer> getGuesses() {
+    public ArrayList<Integer> getGuesses(int number){
         return guesses;
     }
+
 }
 
