@@ -1,6 +1,6 @@
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 public class  HumanPlayer extends Player {
     public int makeGuess(){
         Scanner scanner = new Scanner(System.in);
@@ -9,6 +9,7 @@ public class  HumanPlayer extends Player {
             try{
                 System.out.println(name + " Introduce un número entre 1 y 100: ");
                 guess = scanner.nextInt();
+                guesses.add(guess);
                 break;
             }catch(InputMismatchException e){
                 System.out.println("Error:  debes ingresar un número");
@@ -19,16 +20,16 @@ public class  HumanPlayer extends Player {
         return guess;
     }
 
-
     @Override
-    public String getName() {
-        return super.getName();
+    public String getName(){
+        System.out.println("Por favor introduce tu nombre: ");
+        Scanner scanner = new Scanner(System.in);
+        name = scanner.nextLine();
+        return name;
     }
 
 
-    @Override
-    public ArrayList<Integer> getGuesses(int number) {
-        guesses.add(number);
-        return guesses;
-    }
+
+
+
 }
